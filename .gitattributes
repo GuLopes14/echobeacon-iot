@@ -1,0 +1,4 @@
+*.ino linguagem = c++
+*.cpp linguagem = c++
+*.js linguist-language = javascript
+*.mjs linguist-language = javascript
