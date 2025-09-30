@@ -1,0 +1,224 @@
+[
+    {
+        "id": "tab_echobeacon",
+        "type": "tab",
+        "label": "EchoBeacon",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "btn_moto1",
+        "type": "ui_button",
+        "z": "tab_echobeacon",
+        "name": "Botão Moto 1",
+        "group": "grupo_controle",
+        "order": 1,
+        "width": "4",
+        "height": "1",
+        "passthru": false,
+        "label": "🔴 Moto 1 (ABC1234)",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "#ff6b6b",
+        "className": "",
+        "icon": "fa-motorcycle",
+        "payload": "{\"comando\":\"ativar\",\"moto\":{\"placa\":\"ABC1234\",\"modelo\":\"MOTTU_E\",\"chassi\":\"9BWZZZ377VT004251\"}}",
+        "payloadType": "json",
+        "topic": "fiap/iot/echobeacon/comando",
+        "topicType": "str",
+        "x": 170,
+        "y": 120,
+        "wires": [
+            [
+                "mqtt_out_node"
+            ]
+        ]
+    },
+    {
+        "id": "btn_moto2",
+        "type": "ui_button",
+        "z": "tab_echobeacon",
+        "name": "Botão Moto 2",
+        "group": "grupo_controle",
+        "order": 2,
+        "width": "4",
+        "height": "1",
+        "passthru": false,
+        "label": "🟡 Moto 2 (CDE5678)",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "#ffd93d",
+        "className": "",
+        "icon": "fa-motorcycle",
+        "payload": "{\"comando\":\"ativar\",\"moto\":{\"placa\":\"CDE5678\",\"modelo\":\"MOTTU_POP\",\"chassi\":\"9BWZZZ377VT004252\"}}",
+        "payloadType": "json",
+        "topic": "fiap/iot/echobeacon/comando",
+        "topicType": "str",
+        "x": 170,
+        "y": 180,
+        "wires": [
+            [
+                "mqtt_out_node"
+            ]
+        ]
+    },
+    {
+        "id": "btn_moto3",
+        "type": "ui_button",
+        "z": "tab_echobeacon",
+        "name": "Botão Moto 3",
+        "group": "grupo_controle",
+        "order": 3,
+        "width": "4",
+        "height": "1",
+        "passthru": false,
+        "label": "🟢 Moto 3 (FGH3333)",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "#6bcf7f",
+        "className": "",
+        "icon": "fa-motorcycle",
+        "payload": "{\"comando\":\"ativar\",\"moto\":{\"placa\":\"FGH3333\",\"modelo\":\"MOTTU_SPORT\",\"chassi\":\"9BWZZZ377VT004253\"}}",
+        "payloadType": "json",
+        "topic": "fiap/iot/echobeacon/comando",
+        "topicType": "str",
+        "x": 170,
+        "y": 240,
+        "wires": [
+            [
+                "mqtt_out_node"
+            ]
+        ]
+    },
+    {
+        "id": "mqtt_out_node",
+        "type": "mqtt out",
+        "z": "tab_echobeacon",
+        "name": "Publicar MQTT",
+        "topic": "",
+        "qos": "0",
+        "retain": "false",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "broker_hivemq",
+        "x": 440,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "8387fc6bf162b64e",
+        "type": "http request",
+        "z": "tab_echobeacon",
+        "name": "GET /ativacoes",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "http://localhost:3000/ativacoes",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 280,
+        "y": 480,
+        "wires": [
+            [
+                "3f7b0bc1a6f6e02e"
+            ]
+        ]
+    },
+    {
+        "id": "3f7b0bc1a6f6e02e",
+        "type": "ui_table",
+        "z": "tab_echobeacon",
+        "group": "grupo_controle",
+        "name": "Tabela de Ativações",
+        "order": 4,
+        "width": "12",
+        "height": "6",
+        "columns": [],
+        "outputs": 0,
+        "cts": false,
+        "x": 440,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "ea41eb20ef4bf7cb",
+        "type": "inject",
+        "z": "tab_echobeacon",
+        "name": "Atualizar a cada 5s",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "5",
+        "once": true,
+        "onceDelay": "1",
+        "topic": "",
+        "payloadType": "date",
+        "x": 140,
+        "y": 420,
+        "wires": [
+            [
+                "8387fc6bf162b64e"
+            ]
+        ]
+    },
+    {
+        "id": "grupo_controle",
+        "type": "ui_group",
+        "name": "Controle de Motos",
+        "tab": "tab_dashboard",
+        "order": 1,
+        "disp": true,
+        "width": "12",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "broker_hivemq",
+        "type": "mqtt-broker",
+        "name": "HiveMQ Public",
+        "broker": "broker.hivemq.com",
+        "port": "1883",
+        "clientid": "nodered_echobeacon",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "tab_dashboard",
+        "type": "ui_tab",
+        "name": "EchoBeacon Dashboard",
+        "icon": "dashboard",
+        "order": 1,
+        "disabled": false,
+        "hidden": false
+    }
+]
