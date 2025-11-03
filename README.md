@@ -35,7 +35,7 @@ Este sistema visa resolver o problema de localizar rapidamente as motos no páti
 ## Arquitetura Geral 🧩
 
 Componentes e fluxo:
-1. Node-RED Dashboard (botões) publica comando MQTT no tópico: `fiap/iot/echobeacon/comando`.
+1. App mobile (botão "Localizar moto") publica comando MQTT no tópico: `fiap/iot/echobeacon/comando`.
 2. Broker público HiveMQ retransmite a mensagem.
 3. Beacons (ESP32 simulados no Wokwi) filtram pela placa e ativam LED + buzzer.
 
@@ -60,7 +60,7 @@ node-red
 2. Abrir: http://localhost:1880
 3. Importar conteúdo de `node-red/flow.json` (Menu > Import > Paste > Deploy).
 4. Abrir Dashboard: normalmente em `http://localhost:1880/ui`.
-5. Verifique: três botões (Moto 1, 2, 3) + tabela de ativações.
+5. Verifique: painel/operação opcional para monitorar mensagens MQTT (sem botões de acionar; a publicação vem do app mobile).
 
 ### 2. Beacons no Wokwi (Simulação ESP32) 📡
 Para cada pasta em `wokwi/echobeacon1`, `echobeacon2`, `echobeacon3`:
@@ -76,17 +76,13 @@ Para cada pasta em `wokwi/echobeacon1`, `echobeacon2`, `echobeacon3`:
 7. Para desligar: pressionar botão (GPIO 15) simulado (PULLUP → nível LOW aciona desligamento).
 
 ### 3. Acionando 🔔
-1. No Dashboard (Node-RED), clique em um botão de moto.
+1. No app mobile, toque em "Localizar moto" para a placa desejada.
 2. Beacon correspondente ativará alerta.
 
 ---
 
-## 
-
----
-
 ## Fluxo de Dados (Resumo) 🔄
-Node-RED Botão → MQTT (HiveMQ) → Beacons filtram e acionam hardware.
+App mobile (Localizar moto) → MQTT (HiveMQ) → Beacons filtram e acionam hardware.
 
 ---
 
