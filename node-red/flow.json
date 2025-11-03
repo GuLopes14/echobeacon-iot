@@ -1,0 +1,142 @@
+[
+    {
+        "id": "246f414d6c3d3e5d",
+        "type": "tab",
+        "label": "EchoBeacon Flow",
+        "disabled": false,
+        "info": "Fluxo para enviar comandos para o EchoBeacon (ESP32) e receber status via MQTT broker.hivemq.com"
+    },
+    {
+        "id": "3aa0334fab05f04f",
+        "type": "inject",
+        "z": "246f414d6c3d3e5d",
+        "name": "Ativar Localizador",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+    "payload": "{ \"comando\": \"ativar\", \"numero_identificacao\": \"EB-001\" }",
+        "payloadType": "json",
+        "x": 180,
+        "y": 100,
+        "wires": [
+            [
+                "9830bb85b57263d3"
+            ]
+        ]
+    },
+    {
+        "id": "b34017f02ea9feb2",
+        "type": "inject",
+        "z": "246f414d6c3d3e5d",
+        "name": "Desativar Localizador",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+    "payload": "{ \"comando\": \"desativar\", \"numero_identificacao\": \"EB-001\" }",
+        "payloadType": "json",
+        "x": 180,
+        "y": 180,
+        "wires": [
+            [
+                "9830bb85b57263d3"
+            ]
+        ]
+    },
+    {
+        "id": "9830bb85b57263d3",
+        "type": "mqtt out",
+        "z": "246f414d6c3d3e5d",
+        "name": "MQTT Publish - comando",
+        "topic": "fiap/iot/echobeacon/comando",
+        "qos": "0",
+        "retain": "false",
+        "broker": "broker_hivemq",
+        "x": 420,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "73b127761cb32357",
+        "type": "mqtt in",
+        "z": "246f414d6c3d3e5d",
+        "name": "MQTT Subscribe - status",
+        "topic": "fiap/iot/echobeacon/status",
+        "qos": "0",
+        "datatype": "auto",
+        "broker": "broker_hivemq",
+        "inputs": 0,
+        "x": 160,
+        "y": 320,
+        "wires": [
+            [
+                "03eb5046ba8f16db"
+            ]
+        ]
+    },
+    {
+        "id": "03eb5046ba8f16db",
+        "type": "debug",
+        "z": "246f414d6c3d3e5d",
+        "name": "Status Debug",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "x": 420,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "broker_hivemq",
+        "type": "mqtt-broker",
+        "name": "HiveMQ Public",
+        "broker": "broker.hivemq.com",
+        "port": "1883",
+        "clientid": "nodered_echobeacon",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    }
+]
