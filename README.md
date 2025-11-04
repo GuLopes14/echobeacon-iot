@@ -40,7 +40,7 @@ Este sistema visa resolver o problema de localizar rapidamente as motos no páti
 Componentes e fluxo:
 1. App mobile (botão "Localizar moto") publica comando MQTT no tópico: `fiap/iot/echobeacon/comando`.
 2. Broker público HiveMQ retransmite a mensagem.
-3. Beacons (ESP32 simulados no Wokwi) filtram pela placa e ativam LED + buzzer.
+3. Beacons (ESP32 simulados no Wokwi) filtram pelo número de identificação (campo `numero_identificacao`) e ativam LED + buzzer.
 
 ---
 
@@ -71,15 +71,15 @@ Para cada pasta em `wokwi/echobeacon1`, `echobeacon2`, `echobeacon3`:
 2. Criar/abrir projeto ESP32 e copiar arquivos (mínimo `sketch.ino`).
 3. Conferir SSID padrão: `Wokwi-GUEST` (já no código) e senha vazia.
 4. Executar (Play). Manter três janelas paralelas rodando.
-5. Cada beacon responde apenas à sua placa:
-   - Beacon 1: `ABC1234`
-   - Beacon 2: `CDE5678`
-   - Beacon 3: `FGH3333`
+5. Cada beacon responde apenas ao seu número de identificação (campo `numero_identificacao`):
+   - Beacon 1: `1`
+   - Beacon 2: `2`
+   - Beacon 3: `3`
 6. Ao receber comando correto: LED (GPIO 2) acende e buzzer (GPIO 4) toca pulsando.
 7. Para desligar: pressionar botão (GPIO 15) simulado (PULLUP → nível LOW aciona desligamento).
 
 ### 3. Acionando 🔔
-1. No app mobile, toque em "Localizar moto" para a placa desejada.
+1. No app mobile, toque em "Localizar moto" para o número de identificação (ID) desejado.
 2. Beacon correspondente ativará alerta.
 
 ---
@@ -92,7 +92,7 @@ App mobile (Localizar moto) → MQTT (HiveMQ) → Beacons filtram e acionam hard
 ## Problemas Comuns 🐛
 | Problema | Causa provável | Solução |
 |----------|----------------|---------|
-| Beacon não reage | Placa enviada diferente da esperada | Verificar placa no payload do botão Node-RED |
+| Beacon não reage | `numero_identificacao` enviado diferente do esperado | Verificar campo `numero_identificacao` no payload do botão Node-RED |
 | Sem som | Buzzer pin incorreto na simulação | Garantir pino 4 conectado a buzzer ativo no Wokwi |
 | MQTT não conecta | Instabilidade broker público ⚠️ | Aguardar, ou trocar broker público / local |
 | Muitos registros duplicados | Reenvio repetido de comando | Confirmar não há automação extra publicando |
