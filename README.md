@@ -16,6 +16,9 @@ O projeto EchoBeacon visa implementar uma solução tecnológica para melhorar a
 3. **Aplicativo Móvel**: Conectado ao banco de dados centralizado para fornecer acesso aos colaboradores para consultar informações e localizar as motos.
 4. **Banco de Dados Centralizado**: Armazena todas as informações relevantes sobre as motos, permitindo uma gestão eficiente.
 
+Link para o vídeo de explicação: [Vídeo](https://youtu.be/uhX8VE8JA_I)
+
+
 ### Funcionalidades do EchoBeacon ⚙️
 
 - **Identificação Rápida**: Usando um sistema de som (pequeno alarme) e LED/farol.
